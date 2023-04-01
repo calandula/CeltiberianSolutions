@@ -1,5 +1,8 @@
 /* CreateUser Form */
 .createuserform {
+    margin: 0 auto;
+    margin-top: 100px;
+    width: 300px;
     display: flex;
     flex-direction: column;
     justify-content: center;

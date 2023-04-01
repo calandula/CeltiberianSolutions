@@ -6,6 +6,7 @@ const Navbar = () => {
     const router = useRouter();
     return (
         <div className={styles.topnav}>
+            <Link href="/" className={router.pathname == "/" ? styles.active : ''}>Welcome</Link>
             <Link href="/UsersList" className={router.pathname == "/UsersList" ? styles.active : ''}>List of Users</Link>
             <Link href="/createUser" className={router.pathname == "/createUser" ? styles.active : ''}>Create User</Link>
         </div>  

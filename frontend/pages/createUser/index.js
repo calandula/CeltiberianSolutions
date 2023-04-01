@@ -21,7 +21,6 @@ function CreateUser({ addUser }) {
         });
         const data = await response.json();
         if (response.ok) {
-            console.log(data);
             setName('');
             setSurname('');
             setUsername('');
