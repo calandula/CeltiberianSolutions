@@ -1,0 +1,52 @@
+version: '3.8'
+
+services:
+  db:
+    container_name: postgres-db
+    image: postgres
+    ports:
+      - '5432:5432'
+    environment: 
+      - POSTGRES_USER=${DATABASE_USER}
+      - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+    networks:
+      - backend_network
+  backend:
+    container_name: userapi
+    build:
+      context: ./backend
+    depends_on:
+      - db
+    volumes:
+      - .:/backend-volume
+    command: npm run start:dev
+    ports:
+      - "3000:3000"
+    environment: 
+      - DB_TYPE=${DB_TYPE}
+      - POSTGRES_HOST=${POSTGRES_HOST}
+      - POSTGRES_USER=${DATABASE_USER}
+      - POSTGRES_PASS=${DATABASE_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_SYNC=false
+      - POSTGRES_PORT=${POSTGRES_PORT}
+      - APP_PORT=${APP_PORT}
+    networks:
+      - backend_network
+  frontend:
+    container_name: userfront
+    build:
+      context: ./frontend
+    depends_on:
+      - backend
+    volumes:
+      - .:/frontend-volume
+    ports:
+      - "4000:4000"
+    networks:
+      - backend_network
+
+networks:
+  backend_network:
+    driver: bridge
